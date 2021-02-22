@@ -38,9 +38,9 @@ loop    lda mtab,x      ; read menu id
         jmp prn2
 prn     lda #$00
         sta invflag
-prn2    jsr print
+prn2    jsr print       ; display menu item
         inx
-        jmp loop
+        jmp loop        ; next item
         sta ALTCHARSET0FF
 fin     rts
 *
@@ -57,7 +57,11 @@ lprint  lda (ptr1),y    ; read menu string
         lda invflag     ; normal or inverse ?
         beq normal      ; normal char.
         pla
-        and #$7F        ; inverse char.
+        cmp #$E0        ; start of lowercase inverse
+        bge lower
+        and #$3F        ; to get inverse uppercase
+        jmp out
+lower   and #$7F        ; to get inverse lowercase
         jmp out
 normal  pla
 out     jsr cout
@@ -68,8 +72,9 @@ printend nop
         jsr cout
         rts
 *
-* * * * * * DATA * * * * * * 
-*
+* * * * * * * * DATA  * * * * * * * * 
+*  needed to dispalay menu routine  *
+* * * * * * * * * * * * * * * * * * * 
 mtab    hex 01
         da m1
         hex 02
@@ -78,17 +83,21 @@ mtab    hex 01
         da m3
         hex 04
         da m4
+        hex 05
+        da m5
         hex 00          ; flog for end of array
 
 curm    hex 00
 invflag hex 00
 
-m1      asc "item 1"
+m1      asc "Premier *+><!"
         hex 00
 m2      asc "item 2"
         hex 00
 m3      asc "item 3"
         hex 00
 m4      asc "item 4"
+        hex 00 
+m5      asc "DERNIER"
         hex 00 
 *   
