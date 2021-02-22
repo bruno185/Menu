@@ -84,4 +84,5 @@ m2      asc "item 2"
 m3      asc "item 3"
         hex 00
 m4      asc "item 4"
-        hex 00    
+        hex 00 
+*   
