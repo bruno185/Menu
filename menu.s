@@ -11,13 +11,14 @@ ALTCHARSET0FF equ $C00E
 ALTCHARSET0N equ $C00F
 
         org $4000
-        jsr home
+main    jsr home
         lda #$01        ; menu # to hilight
         sta curm
         jsr dispmenu    ; display menu
         rts             ; bye
-
-* * * * * * Display menu routine * * * * * * 
+*
+* * * * * * Display menu routine * * * * * *
+*
 dispmenu nop
         ldx #$00
 loop    lda mtab,x      ; read menu id
@@ -42,8 +43,9 @@ prn2    jsr print
         jmp loop
         sta ALTCHARSET0FF
 fin     rts
-
+*
 * * * * * * Print menu item * * * * * * 
+*
 print   nop             
         sta ALTCHARSET0N        ; to get lowercase inverse
 * charsets explained here : 
@@ -65,7 +67,9 @@ printend nop
         lda #$8D        ; next line
         jsr cout
         rts
-
+*
+* * * * * * DATA * * * * * * 
+*
 mtab    hex 01
         da m1
         hex 02
