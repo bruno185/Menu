@@ -1,0 +1,88 @@
+------+------------------+-------------+----+---------+------+-----------------------+-------------------------------------------------------------------
+ Line | # File      Line | Line Type   | MX |  Reloc  | Size | Address   Object Code |  Source Code                                                      
+------+------------------+-------------+----+---------+------+-----------------------+-------------------------------------------------------------------
+    1 |  1 menu.s      1 | Comment     | 11 |         |    0 | 00/8000               | *
+    2 |  1 menu.s      2 | Comment     | 11 |         |    0 | 00/8000               | * DOMENU
+    3 |  1 menu.s      3 | Comment     | 11 |         |    0 | 00/8000               | *
+    4 |  1 menu.s      4 | Equivalence | 11 |         |    0 | 00/8000               | basl        equ   $28            
+    5 |  1 menu.s      5 | Equivalence | 11 |         |    0 | 00/8000               | cout        equ   $FDED          
+    6 |  1 menu.s      6 | Equivalence | 11 |         |    0 | 00/8000               | home        equ   $FC58          
+    7 |  1 menu.s      7 | Equivalence | 11 |         |    0 | 00/8000               | bascalc     equ   $FBC1          
+    8 |  1 menu.s      8 | Equivalence | 11 |         |    0 | 00/8000               | wait        equ   $FCA8          
+    9 |  1 menu.s      9 | Equivalence | 11 |         |    0 | 00/8000               | timer       equ   $01            
+   10 |  1 menu.s     10 | Equivalence | 11 |         |    0 | 00/8000               | ptr1        equ   $06            
+   11 |  1 menu.s     11 | Equivalence | 11 |         |    0 | 00/8000               | prt2        equ   $08            
+   12 |  1 menu.s     12 | Empty       | 11 |         |    0 | 00/8000               |                                  
+   13 |  1 menu.s     13 | Directive   | 11 |         |    0 | 00/8000               |             org   $4000          
+   14 |  1 menu.s     14 | Code        | 11 |         |    3 | 00/4000 : 20 58 FC    |             jsr   {$FC58}        
+   15 |  1 menu.s     15 | Code        | 11 |         |    2 | 00/4003 : A9 02       |             lda   #$02           
+   16 |  1 menu.s     16 | Code        | 11 |         |    3 | 00/4005 : 8D 65 40    |             sta   curm           
+   17 |  1 menu.s     17 | Code        | 11 |         |    3 | 00/4008 : 20 0C 40    |             jsr   dispmenu       
+   18 |  1 menu.s     18 | Code        | 11 |         |    1 | 00/400B : 60          |             rts                  
+   19 |  1 menu.s     19 | Empty       | 11 |         |    0 | 00/400C               |                                  
+   20 |  1 menu.s     20 | Code        | 11 |         |    1 | 00/400C : EA          | dispmenu    nop                  
+   21 |  1 menu.s     21 | Code        | 11 |         |    2 | 00/400D : A2 00       |             ldx   #$00           
+   22 |  1 menu.s     22 | Code        | 11 |         |    3 | 00/400F : BD 58 40    | loop        lda   mtab,x         
+   23 |  1 menu.s     23 | Code        | 11 |         |    2 | 00/4012 : F0 27       |             beq   fin            
+   24 |  1 menu.s     24 | Code        | 11 |         |    1 | 00/4014 : 48          |             pha                  ; save meun#
+   25 |  1 menu.s     25 | Code        | 11 |         |    1 | 00/4015 : E8          |             inx                  
+   26 |  1 menu.s     26 | Code        | 11 |         |    3 | 00/4016 : BD 58 40    |             lda   mtab,x         
+   27 |  1 menu.s     27 | Code        | 11 |         |    2 | 00/4019 : 85 06       |             sta   {$06}          
+   28 |  1 menu.s     28 | Code        | 11 |         |    1 | 00/401B : E8          |             inx                  
+   29 |  1 menu.s     29 | Code        | 11 |         |    3 | 00/401C : BD 58 40    |             lda   mtab,x         
+   30 |  1 menu.s     30 | Code        | 11 |         |    2 | 00/401F : 85 07       |             sta   {$06}+1        
+   31 |  1 menu.s     31 | Code        | 11 |         |    1 | 00/4021 : 68          |             pla                  ; get menu#
+   32 |  1 menu.s     32 | Code        | 11 |         |    3 | 00/4022 : CD 65 40    |             cmp   curm           
+   33 |  1 menu.s     33 | Code        | 11 |         |    2 | 00/4025 : D0 08       |             bne   prn            
+   34 |  1 menu.s     34 | Code        | 11 |         |    2 | 00/4027 : A9 01       |             lda   #$01           
+   35 |  1 menu.s     35 | Code        | 11 |         |    3 | 00/4029 : 8D 66 40    |             sta   invflag        
+   36 |  1 menu.s     36 | Code        | 11 |         |    3 | 00/402C : 4C 34 40    |             jmp   prn2           
+   37 |  1 menu.s     37 | Code        | 11 |         |    2 | 00/402F : A9 00       | prn         lda   #$00           
+   38 |  1 menu.s     38 | Code        | 11 |         |    3 | 00/4031 : 8D 66 40    |             sta   invflag        
+   39 |  1 menu.s     39 | Code        | 11 |         |    3 | 00/4034 : 20 3C 40    | prn2        jsr   print          
+   40 |  1 menu.s     40 | Code        | 11 |         |    1 | 00/4037 : E8          |             inx                  
+   41 |  1 menu.s     41 | Code        | 11 |         |    3 | 00/4038 : 4C 0F 40    |             jmp   loop           
+   42 |  1 menu.s     42 | Code        | 11 |         |    1 | 00/403B : 60          | fin         rts                  
+   43 |  1 menu.s     43 | Empty       | 11 |         |    0 | 00/403C               |                                  
+   44 |  1 menu.s     44 | Code        | 11 |         |    1 | 00/403C : EA          | print       nop                  
+   45 |  1 menu.s     45 | Code        | 11 |         |    2 | 00/403D : A0 00       |             ldy   #$00           
+   46 |  1 menu.s     46 | Code        | 11 |         |    2 | 00/403F : B1 06       | lprint      lda   ({$06}),y      
+   47 |  1 menu.s     47 | Code        | 11 |         |    2 | 00/4041 : F0 0E       |             beq   printend       
+   48 |  1 menu.s     48 | Code        | 11 |         |    3 | 00/4043 : AE 66 40    |             ldx   invflag        
+   49 |  1 menu.s     49 | Code        | 11 |         |    2 | 00/4046 : F0 02       |             beq   c              
+   50 |  1 menu.s     50 | Code        | 11 |         |    2 | 00/4048 : 29 7F       |             and   #$7F           
+   51 |  1 menu.s     51 | Code        | 11 |         |    3 | 00/404A : 20 ED FD    | c           jsr   {$FDED}        
+   52 |  1 menu.s     52 | Code        | 11 |         |    1 | 00/404D : C8          |             iny                  
+   53 |  1 menu.s     53 | Code        | 11 |         |    3 | 00/404E : 4C 3F 40    |             jmp   lprint         
+   54 |  1 menu.s     54 | Code        | 11 |         |    1 | 00/4051 : EA          | printend    nop                  
+   55 |  1 menu.s     55 | Code        | 11 |         |    2 | 00/4052 : A9 8D       |             lda   #$8D           
+   56 |  1 menu.s     56 | Code        | 11 |         |    3 | 00/4054 : 20 ED FD    |             jsr   {$FDED}        
+   57 |  1 menu.s     57 | Code        | 11 |         |    1 | 00/4057 : 60          |             rts                  
+   58 |  1 menu.s     58 | Empty       | 11 |         |    0 | 00/4058               |                                  
+   59 |  1 menu.s     59 | Data        | 11 |         |    1 | 00/4058 : 01          | mtab        hex   01             
+   60 |  1 menu.s     60 | Data        | 11 |         |    2 | 00/4059 : 67 40       |             da    m1             
+   61 |  1 menu.s     61 | Data        | 11 |         |    1 | 00/405B : 02          |             hex   02             
+   62 |  1 menu.s     62 | Data        | 11 |         |    2 | 00/405C : 6E 40       |             da    m2             
+   63 |  1 menu.s     63 | Data        | 11 |         |    1 | 00/405E : 03          |             hex   03             
+   64 |  1 menu.s     64 | Data        | 11 |         |    2 | 00/405F : 75 40       |             da    m3             
+   65 |  1 menu.s     65 | Data        | 11 |         |    1 | 00/4061 : 04          |             hex   04             
+   66 |  1 menu.s     66 | Data        | 11 |         |    2 | 00/4062 : 7C 40       |             da    m4             
+   67 |  1 menu.s     67 | Data        | 11 |         |    1 | 00/4064 : 00          |             hex   00             
+   68 |  1 menu.s     68 | Empty       | 11 |         |    0 | 00/4065               |                                  
+   69 |  1 menu.s     69 | Data        | 11 |         |    1 | 00/4065 : 00          | curm        hex   00             
+   70 |  1 menu.s     70 | Data        | 11 |         |    1 | 00/4066 : 00          | invflag     hex   00             
+   71 |  1 menu.s     71 | Empty       | 11 |         |    0 | 00/4067               |                                  
+   72 |  1 menu.s     72 | Data        | 11 |         |    6 | 00/4067 : C9 F4 E5 ED | m1          asc   "Item 1"       
+      |                  |             |    |         |      |           A0 B1       |
+   73 |  1 menu.s     73 | Data        | 11 |         |    1 | 00/406D : 00          |             hex   00             
+   74 |  1 menu.s     74 | Data        | 11 |         |    6 | 00/406E : C9 F4 E5 ED | m2          asc   "Item 2"       
+      |                  |             |    |         |      |           A0 B2       |
+   75 |  1 menu.s     75 | Data        | 11 |         |    1 | 00/4074 : 00          |             hex   00             
+   76 |  1 menu.s     76 | Data        | 11 |         |    6 | 00/4075 : C9 F4 E5 ED | m3          asc   "Item 3"       
+      |                  |             |    |         |      |           A0 B3       |
+   77 |  1 menu.s     77 | Data        | 11 |         |    1 | 00/407B : 00          |             hex   00             
+   78 |  1 menu.s     78 | Data        | 11 |         |    6 | 00/407C : C9 F4 E5 ED | m4          asc   "Item 4"       
+      |                  |             |    |         |      |           A0 B4       |
+   79 |  1 menu.s     79 | Data        | 11 |         |    1 | 00/4082 : 00          |             hex   00             
+   80 |  1 menu.s     80 | Empty       | 11 |         |    0 | 00/4083               |                                  
+------+------------------+-------------+----+---------+------+-----------------------+-------------------------------------------------------------------
