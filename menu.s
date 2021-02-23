@@ -1,7 +1,6 @@
 *
 * DOMENU
 *
-* http://hackzapple.org/scripts_php/index.php?menu=14&mod=8517283d55e912b0b5ac842147e28904a4a751d3&page=7
 basl    equ $28
 cout    equ $FDED
 home    equ $FC58
@@ -51,6 +50,8 @@ print   nop
         sta ALTCHARSET0N        ; to get lowercase inverse
 * charsets explained here : 
 * https://retrocomputing.stackexchange.com/questions/8652/
+* and here :
+* http://hackzapple.org/scripts_php/index.php?menu=14&mod=8517283d55e912b0b5ac842147e28904a4a751d3&page=7
         ldy #$00
 lprint  lda (ptr1),y    ; read menu string
         beq printend    ; ended by 0
