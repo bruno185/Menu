@@ -1,6 +1,7 @@
 *
 * DOMENU
 *
+* http://hackzapple.org/scripts_php/index.php?menu=14&mod=8517283d55e912b0b5ac842147e28904a4a751d3&page=7
 basl    equ $28
 cout    equ $FDED
 home    equ $FC58
