@@ -8,89 +8,108 @@
     5 |  1 menu.s      5 | Equivalence | 11 |         |    0 | 00/8000               | cout           equ   $FDED          
     6 |  1 menu.s      6 | Equivalence | 11 |         |    0 | 00/8000               | home           equ   $FC58          
     7 |  1 menu.s      7 | Equivalence | 11 |         |    0 | 00/8000               | bascalc        equ   $FBC1          
-    8 |  1 menu.s      8 | Equivalence | 11 |         |    0 | 00/8000               | wait           equ   $FCA8          
-    9 |  1 menu.s      9 | Equivalence | 11 |         |    0 | 00/8000               | timer          equ   $01            
-   10 |  1 menu.s     10 | Equivalence | 11 |         |    0 | 00/8000               | ptr1           equ   $06            
-   11 |  1 menu.s     11 | Equivalence | 11 |         |    0 | 00/8000               | prt2           equ   $08            
-   12 |  1 menu.s     12 | Equivalence | 11 |         |    0 | 00/8000               | ALTCHARSET0FF  equ   $C00E          
-   13 |  1 menu.s     13 | Equivalence | 11 |         |    0 | 00/8000               | ALTCHARSET0N   equ   $C00F          
-   14 |  1 menu.s     14 | Empty       | 11 |         |    0 | 00/8000               |                                     
-   15 |  1 menu.s     15 | Directive   | 11 |         |    0 | 00/8000               |                org   $4000          
-   16 |  1 menu.s     16 | Code        | 11 |         |    3 | 00/4000 : 20 58 FC    |                jsr   {$FC58}        
-   17 |  1 menu.s     17 | Code        | 11 |         |    2 | 00/4003 : A9 01       |                lda   #$01           ; menu# to hilight
-   18 |  1 menu.s     18 | Code        | 11 |         |    3 | 00/4005 : 8D 71 40    |                sta   curm           
-   19 |  1 menu.s     19 | Code        | 11 |         |    3 | 00/4008 : 20 0C 40    |                jsr   dispmenu       ; display menu
-   20 |  1 menu.s     20 | Code        | 11 |         |    1 | 00/400B : 60          |                rts                  ; bye
-   21 |  1 menu.s     21 | Empty       | 11 |         |    0 | 00/400C               |                                     
+    8 |  1 menu.s      8 | Equivalence | 11 |         |    0 | 00/8000               | ptr1           equ   $06            
+    9 |  1 menu.s      9 | Equivalence | 11 |         |    0 | 00/8000               | prt2           equ   $08            
+   10 |  1 menu.s     10 | Equivalence | 11 |         |    0 | 00/8000               | ALTCHARSET0FF  equ   $C00E          
+   11 |  1 menu.s     11 | Equivalence | 11 |         |    0 | 00/8000               | ALTCHARSET0N   equ   $C00F          
+   12 |  1 menu.s     12 | Empty       | 11 |         |    0 | 00/8000               |                                     
+   13 |  1 menu.s     13 | Directive   | 11 |         |    0 | 00/8000               |                org   $4000          
+   14 |  1 menu.s     14 | Code        | 11 |         |    3 | 00/4000 : 20 58 FC    | main           jsr   {$FC58}        
+   15 |  1 menu.s     15 | Code        | 11 |         |    2 | 00/4003 : A9 01       |                lda   #$01           ; menu # to hilight
+   16 |  1 menu.s     16 | Code        | 11 |         |    3 | 00/4005 : 8D 7D 40    |                sta   curm           
+   17 |  1 menu.s     17 | Code        | 11 |         |    3 | 00/4008 : 20 0C 40    |                jsr   dispmenu       ; display menu
+   18 |  1 menu.s     18 | Code        | 11 |         |    1 | 00/400B : 60          |                rts                  ; bye
+   19 |  1 menu.s     19 | Comment     | 11 |         |    0 | 00/400C               | *
+   20 |  1 menu.s     20 | Comment     | 11 |         |    0 | 00/400C               | * * * * * * Display menu routine * * * * * *
+   21 |  1 menu.s     21 | Comment     | 11 |         |    0 | 00/400C               | *
    22 |  1 menu.s     22 | Code        | 11 |         |    1 | 00/400C : EA          | dispmenu       nop                  
    23 |  1 menu.s     23 | Code        | 11 |         |    2 | 00/400D : A2 00       |                ldx   #$00           
-   24 |  1 menu.s     24 | Code        | 11 |         |    3 | 00/400F : BD 64 40    | loop           lda   mtab,x         ; read menu id
+   24 |  1 menu.s     24 | Code        | 11 |         |    3 | 00/400F : BD 6D 40    | loop           lda   mtab,x         ; read menu id
    25 |  1 menu.s     25 | Code        | 11 |         |    2 | 00/4012 : F0 2A       |                beq   fin            ; if = 0 then end
    26 |  1 menu.s     26 | Code        | 11 |         |    1 | 00/4014 : 48          |                pha                  ; save meun #
    27 |  1 menu.s     27 | Code        | 11 |         |    1 | 00/4015 : E8          |                inx                  ; read string memory location
-   28 |  1 menu.s     28 | Code        | 11 |         |    3 | 00/4016 : BD 64 40    |                lda   mtab,x         ; in ptr1
+   28 |  1 menu.s     28 | Code        | 11 |         |    3 | 00/4016 : BD 6D 40    |                lda   mtab,x         ; in ptr1
    29 |  1 menu.s     29 | Code        | 11 |         |    2 | 00/4019 : 85 06       |                sta   {$06}          
    30 |  1 menu.s     30 | Code        | 11 |         |    1 | 00/401B : E8          |                inx                  
-   31 |  1 menu.s     31 | Code        | 11 |         |    3 | 00/401C : BD 64 40    |                lda   mtab,x         
+   31 |  1 menu.s     31 | Code        | 11 |         |    3 | 00/401C : BD 6D 40    |                lda   mtab,x         
    32 |  1 menu.s     32 | Code        | 11 |         |    2 | 00/401F : 85 07       |                sta   {$06}+1        
    33 |  1 menu.s     33 | Code        | 11 |         |    1 | 00/4021 : 68          |                pla                  ; get menu #
-   34 |  1 menu.s     34 | Code        | 11 |         |    3 | 00/4022 : CD 71 40    |                cmp   curm           ; = menu # to hilight ?
+   34 |  1 menu.s     34 | Code        | 11 |         |    3 | 00/4022 : CD 7D 40    |                cmp   curm           ; = menu # to hilight ?
    35 |  1 menu.s     35 | Code        | 11 |         |    2 | 00/4025 : D0 08       |                bne   prn            ; no : set flog to 0
    36 |  1 menu.s     36 | Code        | 11 |         |    2 | 00/4027 : A9 01       |                lda   #$01           ; yes : set flog to 1
-   37 |  1 menu.s     37 | Code        | 11 |         |    3 | 00/4029 : 8D 72 40    |                sta   invflag        
+   37 |  1 menu.s     37 | Code        | 11 |         |    3 | 00/4029 : 8D 7E 40    |                sta   invflag        
    38 |  1 menu.s     38 | Code        | 11 |         |    3 | 00/402C : 4C 34 40    |                jmp   prn2           
    39 |  1 menu.s     39 | Code        | 11 |         |    2 | 00/402F : A9 00       | prn            lda   #$00           
-   40 |  1 menu.s     40 | Code        | 11 |         |    3 | 00/4031 : 8D 72 40    |                sta   invflag        
-   41 |  1 menu.s     41 | Code        | 11 |         |    3 | 00/4034 : 20 3F 40    | prn2           jsr   print          
+   40 |  1 menu.s     40 | Code        | 11 |         |    3 | 00/4031 : 8D 7E 40    |                sta   invflag        
+   41 |  1 menu.s     41 | Code        | 11 |         |    3 | 00/4034 : 20 3F 40    | prn2           jsr   print          ; display menu item
    42 |  1 menu.s     42 | Code        | 11 |         |    1 | 00/4037 : E8          |                inx                  
-   43 |  1 menu.s     43 | Code        | 11 |         |    3 | 00/4038 : 4C 0F 40    |                jmp   loop           
+   43 |  1 menu.s     43 | Code        | 11 |         |    3 | 00/4038 : 4C 0F 40    |                jmp   loop           ; next item
    44 |  1 menu.s     44 | Code        | 11 |         |    3 | 00/403B : 8D 0E C0    |                sta   {$C00E}        
    45 |  1 menu.s     45 | Code        | 11 |         |    1 | 00/403E : 60          | fin            rts                  
-   46 |  1 menu.s     46 | Empty       | 11 |         |    0 | 00/403F               |                                     
-   47 |  1 menu.s     47 | Code        | 11 |         |    1 | 00/403F : EA          | print          nop                  
-   48 |  1 menu.s     48 | Code        | 11 |         |    3 | 00/4040 : 8D 0F C0    |                sta   {$C00F}        
-   49 |  1 menu.s     49 | Code        | 11 |         |    2 | 00/4043 : A0 00       |                ldy   #$00           
-   50 |  1 menu.s     50 | Code        | 11 |         |    2 | 00/4045 : B1 06       | lprint         lda   ({$06}),y      ; read menu string
-   51 |  1 menu.s     51 | Code        | 11 |         |    2 | 00/4047 : F0 14       |                beq   printend       ; ended by 0
-   52 |  1 menu.s     52 | Code        | 11 |         |    1 | 00/4049 : 48          |                pha                  
-   53 |  1 menu.s     53 | Code        | 11 |         |    3 | 00/404A : AD 72 40    |                lda   invflag        
-   54 |  1 menu.s     54 | Code        | 11 |         |    2 | 00/404D : F0 06       |                beq   normal         ; normal char.
-   55 |  1 menu.s     55 | Code        | 11 |         |    1 | 00/404F : 68          |                pla                  
-   56 |  1 menu.s     56 | Code        | 11 |         |    2 | 00/4050 : 29 7F       |                and   #$7F           ; set inverse char.
-   57 |  1 menu.s     57 | Code        | 11 |         |    3 | 00/4052 : 4C 56 40    |                jmp   out            
-   58 |  1 menu.s     58 | Code        | 11 |         |    1 | 00/4055 : 68          | normal         pla                  
-   59 |  1 menu.s     59 | Code        | 11 |         |    3 | 00/4056 : 20 ED FD    | out            jsr   {$FDED}        
-   60 |  1 menu.s     60 | Code        | 11 |         |    1 | 00/4059 : C8          |                iny                  
-   61 |  1 menu.s     61 | Code        | 11 |         |    3 | 00/405A : 4C 45 40    |                jmp   lprint         
-   62 |  1 menu.s     62 | Code        | 11 |         |    1 | 00/405D : EA          | printend       nop                  
-   63 |  1 menu.s     63 | Code        | 11 |         |    2 | 00/405E : A9 8D       |                lda   #$8D           
-   64 |  1 menu.s     64 | Code        | 11 |         |    3 | 00/4060 : 20 ED FD    |                jsr   {$FDED}        
-   65 |  1 menu.s     65 | Code        | 11 |         |    1 | 00/4063 : 60          |                rts                  
-   66 |  1 menu.s     66 | Empty       | 11 |         |    0 | 00/4064               |                                     
-   67 |  1 menu.s     67 | Data        | 11 |         |    1 | 00/4064 : 01          | mtab           hex   01             
-   68 |  1 menu.s     68 | Data        | 11 |         |    2 | 00/4065 : 73 40       |                da    m1             
-   69 |  1 menu.s     69 | Data        | 11 |         |    1 | 00/4067 : 02          |                hex   02             
-   70 |  1 menu.s     70 | Data        | 11 |         |    2 | 00/4068 : 7A 40       |                da    m2             
-   71 |  1 menu.s     71 | Data        | 11 |         |    1 | 00/406A : 03          |                hex   03             
-   72 |  1 menu.s     72 | Data        | 11 |         |    2 | 00/406B : 81 40       |                da    m3             
-   73 |  1 menu.s     73 | Data        | 11 |         |    1 | 00/406D : 04          |                hex   04             
-   74 |  1 menu.s     74 | Data        | 11 |         |    2 | 00/406E : 88 40       |                da    m4             
-   75 |  1 menu.s     75 | Data        | 11 |         |    1 | 00/4070 : 00          |                hex   00             
-   76 |  1 menu.s     76 | Empty       | 11 |         |    0 | 00/4071               |                                     
-   77 |  1 menu.s     77 | Data        | 11 |         |    1 | 00/4071 : 00          | curm           hex   00             
-   78 |  1 menu.s     78 | Data        | 11 |         |    1 | 00/4072 : 00          | invflag        hex   00             
-   79 |  1 menu.s     79 | Empty       | 11 |         |    0 | 00/4073               |                                     
-   80 |  1 menu.s     80 | Data        | 11 |         |    6 | 00/4073 : E9 F4 E5 ED | m1             asc   "item 1"       
-      |                  |             |    |         |      |           A0 B1       |
-   81 |  1 menu.s     81 | Data        | 11 |         |    1 | 00/4079 : 00          |                hex   00             
-   82 |  1 menu.s     82 | Data        | 11 |         |    6 | 00/407A : E9 F4 E5 ED | m2             asc   "item 2"       
+   46 |  1 menu.s     46 | Comment     | 11 |         |    0 | 00/403F               | *
+   47 |  1 menu.s     47 | Comment     | 11 |         |    0 | 00/403F               | * * * * * * Print menu item * * * * * * 
+   48 |  1 menu.s     48 | Comment     | 11 |         |    0 | 00/403F               | *
+   49 |  1 menu.s     49 | Code        | 11 |         |    1 | 00/403F : EA          | print          nop                  
+   50 |  1 menu.s     50 | Code        | 11 |         |    3 | 00/4040 : 8D 0F C0    |                sta   {$C00F}        ; to get lowercase inverse
+   51 |  1 menu.s     51 | Comment     | 11 |         |    0 | 00/4043               | * charsets explained here : 
+   52 |  1 menu.s     52 | Comment     | 11 |         |    0 | 00/4043               | * https://retrocomputing.stackexchange.com/questions/8652/
+   53 |  1 menu.s     53 | Code        | 11 |         |    2 | 00/4043 : A0 00       |                ldy   #$00           
+   54 |  1 menu.s     54 | Code        | 11 |         |    2 | 00/4045 : B1 06       | lprint         lda   ({$06}),y      ; read menu string
+   55 |  1 menu.s     55 | Code        | 11 |         |    2 | 00/4047 : F0 1D       |                beq   printend       ; ended by 0
+   56 |  1 menu.s     56 | Code        | 11 |         |    1 | 00/4049 : 48          |                pha                  ; save char. to display
+   57 |  1 menu.s     57 | Code        | 11 |         |    3 | 00/404A : AD 7E 40    |                lda   invflag        ; normal or inverse ?
+   58 |  1 menu.s     58 | Code        | 11 |         |    2 | 00/404D : F0 0F       |                beq   normal         ; normal char.
+   59 |  1 menu.s     59 | Code        | 11 |         |    1 | 00/404F : 68          |                pla                  
+   60 |  1 menu.s     60 | Code        | 11 |         |    2 | 00/4050 : C9 E0       |                cmp   #$E0           ; start of lowercase inverse
+   61 |  1 menu.s     61 | Code        | 11 |         |    2 | 00/4052 : B0 05       |                bge   lower          
+   62 |  1 menu.s     62 | Code        | 11 |         |    2 | 00/4054 : 29 3F       |                and   #$3F           ; to get inverse uppercase
+   63 |  1 menu.s     63 | Code        | 11 |         |    3 | 00/4056 : 4C 5F 40    |                jmp   out            
+   64 |  1 menu.s     64 | Code        | 11 |         |    2 | 00/4059 : 29 7F       | lower          and   #$7F           ; to get inverse lowercase
+   65 |  1 menu.s     65 | Code        | 11 |         |    3 | 00/405B : 4C 5F 40    |                jmp   out            
+   66 |  1 menu.s     66 | Code        | 11 |         |    1 | 00/405E : 68          | normal         pla                  
+   67 |  1 menu.s     67 | Code        | 11 |         |    3 | 00/405F : 20 ED FD    | out            jsr   {$FDED}        
+   68 |  1 menu.s     68 | Code        | 11 |         |    1 | 00/4062 : C8          |                iny                  
+   69 |  1 menu.s     69 | Code        | 11 |         |    3 | 00/4063 : 4C 45 40    |                jmp   lprint         
+   70 |  1 menu.s     70 | Code        | 11 |         |    1 | 00/4066 : EA          | printend       nop                  
+   71 |  1 menu.s     71 | Code        | 11 |         |    2 | 00/4067 : A9 8D       |                lda   #$8D           ; next line
+   72 |  1 menu.s     72 | Code        | 11 |         |    3 | 00/4069 : 20 ED FD    |                jsr   {$FDED}        
+   73 |  1 menu.s     73 | Code        | 11 |         |    1 | 00/406C : 60          |                rts                  
+   74 |  1 menu.s     74 | Comment     | 11 |         |    0 | 00/406D               | *
+   75 |  1 menu.s     75 | Comment     | 11 |         |    0 | 00/406D               | * * * * * * * * DATA  * * * * * * * * 
+   76 |  1 menu.s     76 | Comment     | 11 |         |    0 | 00/406D               | *  needed to dispalay menu routine  *
+   77 |  1 menu.s     77 | Comment     | 11 |         |    0 | 00/406D               | * * * * * * * * * * * * * * * * * * * 
+   78 |  1 menu.s     78 | Data        | 11 |         |    1 | 00/406D : 01          | mtab           hex   01             
+   79 |  1 menu.s     79 | Data        | 11 |         |    2 | 00/406E : 7F 40       |                da    m1             
+   80 |  1 menu.s     80 | Data        | 11 |         |    1 | 00/4070 : 02          |                hex   02             
+   81 |  1 menu.s     81 | Data        | 11 |         |    2 | 00/4071 : 8D 40       |                da    m2             
+   82 |  1 menu.s     82 | Data        | 11 |         |    1 | 00/4073 : 03          |                hex   03             
+   83 |  1 menu.s     83 | Data        | 11 |         |    2 | 00/4074 : 94 40       |                da    m3             
+   84 |  1 menu.s     84 | Data        | 11 |         |    1 | 00/4076 : 04          |                hex   04             
+   85 |  1 menu.s     85 | Data        | 11 |         |    2 | 00/4077 : 9B 40       |                da    m4             
+   86 |  1 menu.s     86 | Data        | 11 |         |    1 | 00/4079 : 05          |                hex   05             
+   87 |  1 menu.s     87 | Data        | 11 |         |    2 | 00/407A : A2 40       |                da    m5             
+   88 |  1 menu.s     88 | Data        | 11 |         |    1 | 00/407C : 00          |                hex   00             ; flog for end of array
+   89 |  1 menu.s     89 | Empty       | 11 |         |    0 | 00/407D               |                                     
+   90 |  1 menu.s     90 | Data        | 11 |         |    1 | 00/407D : 00          | curm           hex   00             
+   91 |  1 menu.s     91 | Data        | 11 |         |    1 | 00/407E : 00          | invflag        hex   00             
+   92 |  1 menu.s     92 | Empty       | 11 |         |    0 | 00/407F               |                                     
+   93 |  1 menu.s     93 | Data        | 11 |         |   13 | 00/407F : D0 F2 E5 ED | m1             asc   "Premier *+><!"
+      |                  |             |    |         |      |           E9 E5 F2 A0 |
+      |                  |             |    |         |      |           AA AB BE BC |
+      |                  |             |    |         |      |           A1          |
+   94 |  1 menu.s     94 | Data        | 11 |         |    1 | 00/408C : 00          |                hex   00             
+   95 |  1 menu.s     95 | Data        | 11 |         |    6 | 00/408D : E9 F4 E5 ED | m2             asc   "item 2"       
       |                  |             |    |         |      |           A0 B2       |
-   83 |  1 menu.s     83 | Data        | 11 |         |    1 | 00/4080 : 00          |                hex   00             
-   84 |  1 menu.s     84 | Data        | 11 |         |    6 | 00/4081 : E9 F4 E5 ED | m3             asc   "item 3"       
+   96 |  1 menu.s     96 | Data        | 11 |         |    1 | 00/4093 : 00          |                hex   00             
+   97 |  1 menu.s     97 | Data        | 11 |         |    6 | 00/4094 : E9 F4 E5 ED | m3             asc   "item 3"       
       |                  |             |    |         |      |           A0 B3       |
-   85 |  1 menu.s     85 | Data        | 11 |         |    1 | 00/4087 : 00          |                hex   00             
-   86 |  1 menu.s     86 | Data        | 11 |         |    6 | 00/4088 : E9 F4 E5 ED | m4             asc   "item 4"       
+   98 |  1 menu.s     98 | Data        | 11 |         |    1 | 00/409A : 00          |                hex   00             
+   99 |  1 menu.s     99 | Data        | 11 |         |    6 | 00/409B : E9 F4 E5 ED | m4             asc   "item 4"       
       |                  |             |    |         |      |           A0 B4       |
-   87 |  1 menu.s     87 | Data        | 11 |         |    1 | 00/408E : 00          |                hex   00             
-   88 |  1 menu.s     88 | Empty       | 11 |         |    0 | 00/408F               |                                     
+  100 |  1 menu.s    100 | Data        | 11 |         |    1 | 00/40A1 : 00          |                hex   00             
+  101 |  1 menu.s    101 | Data        | 11 |         |    7 | 00/40A2 : C4 C5 D2 CE | m5             asc   "DERNIER"      
+      |                  |             |    |         |      |           C9 C5 D2    |
+  102 |  1 menu.s    102 | Data        | 11 |         |    1 | 00/40A9 : 00          |                hex   00             
+  103 |  1 menu.s    103 | Comment     | 11 |         |    0 | 00/40AA               | *   
+  104 |  1 menu.s    104 | Empty       | 11 |         |    0 | 00/40AA               |                                     
 ------+------------------+-------------+----+---------+------+-----------------------+-------------------------------------------------------------------

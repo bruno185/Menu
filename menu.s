@@ -59,7 +59,7 @@ lprint  lda (ptr1),y    ; read menu string
         lda invflag     ; normal or inverse ?
         beq normal      ; normal char.
         pla
-        cmp #$E0        ; start of lowercase inverse
+        cmp #$E0        ; #$E0 = start of lowercase inverse
         bge lower
         and #$3F        ; to get inverse uppercase
         jmp out
